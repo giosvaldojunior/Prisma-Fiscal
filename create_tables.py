@@ -3,15 +3,13 @@ import locale
 from datetime import datetime
 
 # Define o local para interpretar meses em português
-locale.setlocale(locale.LC_TIME, "pt_BR.utf8")  # Para sistemas Linux/Mac
-# locale.setlocale(locale.LC_TIME, "Portuguese_Brazil")  # Para Windows
+locale.setlocale(locale.LC_TIME, "pt_BR.utf8")  
 
 # Carrega o arquivo Excel
-arquivo_entrada = "tabelas.xlsx"  # Substitua pelo nome real do arquivo
-sheet_name = "Planilha1"  # Ajuste conforme necessário
+arquivo_entrada = "tabelas.xlsx"  
+sheet_name = "Planilha1"  
 
 df = pd.read_excel(arquivo_entrada, sheet_name=sheet_name)
-
 
 # Converte a coluna 'mês' para datetime
 def converter_mes_ano(data):
@@ -19,7 +17,6 @@ def converter_mes_ano(data):
         return datetime.strptime(data, "%B/%Y")
     except ValueError:
         return pd.NaT  # Retorna NaT se a conversão falhar
-
 
 df['mês'] = df['mês'].apply(converter_mes_ano)
 
@@ -49,3 +46,4 @@ with pd.ExcelWriter(arquivo_saida) as writer:
         tabela.to_excel(writer, sheet_name=nome_aba[:31], index=False)  # Limita a 31 caracteres
 
 print(f"Processo concluído! Arquivo '{arquivo_saida}' gerado com todas as tabelas organizadas.")
+
